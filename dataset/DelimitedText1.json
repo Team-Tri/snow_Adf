@@ -1,0 +1,88 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageToAdf",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "config_json",
+				"fileSystem": "snowstore"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Order ID",
+				"type": "String"
+			},
+			{
+				"name": "Customer Name",
+				"type": "String"
+			},
+			{
+				"name": "Mobile Model",
+				"type": "String"
+			},
+			{
+				"name": "Quantity",
+				"type": "String"
+			},
+			{
+				"name": "Price per Unit",
+				"type": "String"
+			},
+			{
+				"name": "Total Price",
+				"type": "String"
+			},
+			{
+				"name": "Promotion Code",
+				"type": "String"
+			},
+			{
+				"name": "Order Amount",
+				"type": "String"
+			},
+			{
+				"name": "GST",
+				"type": "String"
+			},
+			{
+				"name": "Order Date",
+				"type": "String"
+			},
+			{
+				"name": "Payment Status",
+				"type": "String"
+			},
+			{
+				"name": "Shipping Status",
+				"type": "String"
+			},
+			{
+				"name": "Payment Method",
+				"type": "String"
+			},
+			{
+				"name": "Payment Provider",
+				"type": "String"
+			},
+			{
+				"name": "Mobile",
+				"type": "String"
+			},
+			{
+				"name": "Delivery Address",
+				"type": "String"
+			}
+		]
+	}
+}
