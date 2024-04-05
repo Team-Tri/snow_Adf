@@ -1,0 +1,9 @@
+{
+	"name": "snowsparkadf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "35a7a7cb-3a11-4148-8030-13904a5e13b8",
+		"tenantId": "638456b8-8343-4e48-9ebe-4f5cf9a1997d"
+	}
+}
