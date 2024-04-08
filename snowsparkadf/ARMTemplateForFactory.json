@@ -45,6 +45,13 @@
 							"url": {
 								"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionId,'/resourceGroups/',pipeline().parameters.ResourceGroupName,'/providers/Microsoft.Compute/virtualMachines/',pipeline().parameters.VMName,'/InstanceView?api-version=2020-12-01')",
 								"type": "Expression"
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": {
+									"value": "https://management.azure.com/subscriptions/@{pipeline().parameters.SubscriptionId}/resourceGroups/@{pipeline().parameters.ResourceGroupName}/providers/Microsoft.Compute/virtualMachines/@{pipeline().parameters.VMName}/instanceView?api-version=2020-12-01",
+									"type": "Expression"
+								}
 							}
 						}
 					}
