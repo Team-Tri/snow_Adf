@@ -22,11 +22,15 @@
 						"type": "Expression"
 					},
 					"authentication": {
-						"type": "MSI",
 						"resource": {
 							"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionId,'/resourceGroups/',pipeline().parameters.ResourceGroupName,'/providers/Microsoft.Compute/virtualMachines/',pipeline().parameters.VMName,'/instanceView?api-version=2024-03-01')",
 							"type": "Expression"
-						}
+						},
+						"credential": {
+							"referenceName": "vmtoadf",
+							"type": "CredentialReference"
+						},
+						"type": "UserAssignedManagedIdentity"
 					}
 				}
 			}
