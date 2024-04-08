@@ -47,10 +47,7 @@
 								"type": "Expression"
 							},
 							"authentication": {
-								"resource": {
-									"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionId,'/resourceGroups/',pipeline().parameters.ResourceGroupName,'/providers/Microsoft.Compute/virtualMachines/',pipeline().parameters.VMName,'/instanceView?api-version=2024-03-01')",
-									"type": "Expression"
-								},
+								"resource": "https://management.azure.com/",
 								"credential": {
 									"referenceName": "vmtoadf",
 									"type": "CredentialReference"
