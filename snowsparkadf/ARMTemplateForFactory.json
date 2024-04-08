@@ -51,8 +51,7 @@
 								"credential": {
 									"referenceName": "vmtoadf",
 									"type": "CredentialReference"
-								},
-								"type": "UserAssignedManagedIdentity"
+								}
 							}
 						}
 					}
