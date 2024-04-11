@@ -51,8 +51,6 @@
 						{
 							"name": "startvmact",
 							"type": "Custom",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
@@ -71,7 +69,7 @@
 									"referenceName": "AzureBlobStorage1",
 									"type": "LinkedServiceReference"
 								},
-								"folderPath": "code",
+								"folderPath": "",
 								"referenceObjects": {
 									"linkedServices": [],
 									"datasets": []
