@@ -69,7 +69,7 @@
 									"referenceName": "AzureBlobStorage1",
 									"type": "LinkedServiceReference"
 								},
-								"folderPath": "",
+								"folderPath": "code",
 								"referenceObjects": {
 									"linkedServices": [],
 									"datasets": []
