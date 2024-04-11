@@ -61,10 +61,20 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"command": "python ",
+								"resourceLinkedService": {
+									"referenceName": "adftostoragelink",
+									"type": "LinkedServiceReference"
+								},
+								"folderPath": "code",
 								"referenceObjects": {
 									"linkedServices": [],
 									"datasets": []
 								}
+							},
+							"linkedServiceName": {
+								"referenceName": "batchtoadf",
+								"type": "LinkedServiceReference"
 							}
 						}
 					]
