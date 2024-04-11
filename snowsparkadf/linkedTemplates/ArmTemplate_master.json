@@ -7,13 +7,49 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "snowsparkadf"
 		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
 		"AzureDataLakeStorageToAdf_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageToAdf'"
 		},
+		"batchtoadf_accessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessKey' of 'batchtoadf'"
+		},
+		"linktoazurestorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'linktoazurestorage'"
+		},
+		"AzureBlobStorage1_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://snowteam2.blob.core.windows.net/"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://snowteam2.dfs.core.windows.net/"
+		},
 		"AzureDataLakeStorageToAdf_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://snowteam2.dfs.core.windows.net/"
+		},
+		"adftostoragelink_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://snowteam2.blob.core.windows.net/"
+		},
+		"batchtoadf_properties_typeProperties_batchUri": {
+			"type": "string",
+			"defaultValue": "https://snowteambatchaccount.eastus.batch.azure.com"
+		},
+		"batchtoadf_properties_typeProperties_poolName": {
+			"type": "string",
+			"defaultValue": "snowpool"
+		},
+		"batchtoadf_properties_typeProperties_accountName": {
+			"type": "string",
+			"defaultValue": "snowteambatchaccount"
 		},
 		"containerUri": {
 			"type": "string",
@@ -42,11 +78,38 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
 					"AzureDataLakeStorageToAdf_accountKey": {
 						"value": "[parameters('AzureDataLakeStorageToAdf_accountKey')]"
 					},
+					"linktoazurestorage_connectionString": {
+						"value": "[parameters('linktoazurestorage_connectionString')]"
+					},
+					"batchtoadf_accessKey": {
+						"value": "[parameters('batchtoadf_accessKey')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
 					"AzureDataLakeStorageToAdf_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorageToAdf_properties_typeProperties_url')]"
+					},
+					"AzureBlobStorage1_properties_typeProperties_serviceEndpoint": {
+						"value": "[parameters('AzureBlobStorage1_properties_typeProperties_serviceEndpoint')]"
+					},
+					"adftostoragelink_properties_typeProperties_serviceEndpoint": {
+						"value": "[parameters('adftostoragelink_properties_typeProperties_serviceEndpoint')]"
+					},
+					"batchtoadf_properties_typeProperties_batchUri": {
+						"value": "[parameters('batchtoadf_properties_typeProperties_batchUri')]"
+					},
+					"batchtoadf_properties_typeProperties_poolName": {
+						"value": "[parameters('batchtoadf_properties_typeProperties_poolName')]"
+					},
+					"batchtoadf_properties_typeProperties_accountName": {
+						"value": "[parameters('batchtoadf_properties_typeProperties_accountName')]"
 					}
 				}
 			},

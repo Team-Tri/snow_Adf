@@ -5,11 +5,38 @@
 		"factoryName": {
 			"value": "snowsparkadf"
 		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
 		"AzureDataLakeStorageToAdf_accountKey": {
 			"value": ""
 		},
+		"batchtoadf_accessKey": {
+			"value": ""
+		},
+		"linktoazurestorage_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage1_properties_typeProperties_serviceEndpoint": {
+			"value": "https://snowteam2.blob.core.windows.net/"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://snowteam2.dfs.core.windows.net/"
+		},
 		"AzureDataLakeStorageToAdf_properties_typeProperties_url": {
 			"value": "https://snowteam2.dfs.core.windows.net/"
+		},
+		"adftostoragelink_properties_typeProperties_serviceEndpoint": {
+			"value": "https://snowteam2.blob.core.windows.net/"
+		},
+		"batchtoadf_properties_typeProperties_batchUri": {
+			"value": "https://snowteambatchaccount.eastus.batch.azure.com"
+		},
+		"batchtoadf_properties_typeProperties_poolName": {
+			"value": "snowpool"
+		},
+		"batchtoadf_properties_typeProperties_accountName": {
+			"value": "snowteambatchaccount"
 		}
 	}
 }

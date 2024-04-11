@@ -7,19 +7,72 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "snowsparkadf"
 		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
 		"AzureDataLakeStorageToAdf_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageToAdf'"
 		},
+		"linktoazurestorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'linktoazurestorage'"
+		},
+		"batchtoadf_accessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessKey' of 'batchtoadf'"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://snowteam2.dfs.core.windows.net/"
+		},
 		"AzureDataLakeStorageToAdf_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://snowteam2.dfs.core.windows.net/"
+		},
+		"AzureBlobStorage1_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://snowteam2.blob.core.windows.net/"
+		},
+		"adftostoragelink_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://snowteam2.blob.core.windows.net/"
+		},
+		"batchtoadf_properties_typeProperties_batchUri": {
+			"type": "string",
+			"defaultValue": "https://snowteambatchaccount.eastus.batch.azure.com"
+		},
+		"batchtoadf_properties_typeProperties_poolName": {
+			"type": "string",
+			"defaultValue": "snowpool"
+		},
+		"batchtoadf_properties_typeProperties_accountName": {
+			"type": "string",
+			"defaultValue": "snowteambatchaccount"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorageToAdf')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -38,6 +91,31 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/linktoazurestorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('linktoazurestorage_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/credential1')]",
+			"type": "Microsoft.DataFactory/factories/credentials",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {
+					"resourceId": "/subscriptions/a16f162e-e90e-4101-8d1d-89a715aa9104/resourcegroups/snowteam2/providers/Microsoft.ManagedIdentity/userAssignedIdentities/azurevmtoadfmsi"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/vmtoadf')]",
 			"type": "Microsoft.DataFactory/factories/credentials",
 			"apiVersion": "2018-06-01",
@@ -48,73 +126,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "check_vm_status",
-						"description": "activity checks for Vm status",
-						"type": "WebActivity",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "GET",
-							"headers": {},
-							"url": {
-								"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionId,'/resourceGroups/',pipeline().parameters.ResourceGroupName,'/providers/Microsoft.Compute/virtualMachines/',pipeline().parameters.VMName,'/InstanceView?api-version=2024-03-01')",
-								"type": "Expression"
-							},
-							"authentication": {
-								"resource": "https://management.azure.com/",
-								"credential": {
-									"referenceName": "vmtoadf",
-									"type": "CredentialReference"
-								}
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"SubscriptionId": {
-						"type": "string",
-						"defaultValue": "a16f162e-e90e-4101-8d1d-89a715aa9104"
-					},
-					"ResourceGroupName": {
-						"type": "string",
-						"defaultValue": "snowteam2"
-					},
-					"Region": {
-						"type": "string",
-						"defaultValue": "eastus"
-					},
-					"VMName": {
-						"type": "string",
-						"defaultValue": "snowsample"
-					},
-					"Command": {
-						"type": "string",
-						"defaultValue": "Start"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/credentials/vmtoadf')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
@@ -207,6 +218,227 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageToAdf')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"serviceEndpoint": "[parameters('AzureBlobStorage1_properties_typeProperties_serviceEndpoint')]",
+					"accountKind": "StorageV2",
+					"credential": {
+						"referenceName": "credential1",
+						"type": "CredentialReference"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/credentials/credential1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/adftostoragelink')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"serviceEndpoint": "[parameters('adftostoragelink_properties_typeProperties_serviceEndpoint')]",
+					"accountKind": "StorageV2",
+					"credential": {
+						"referenceName": "credential1",
+						"type": "CredentialReference"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/credentials/credential1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/batchtoadf')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBatch",
+				"typeProperties": {
+					"batchUri": "[parameters('batchtoadf_properties_typeProperties_batchUri')]",
+					"poolName": "[parameters('batchtoadf_properties_typeProperties_poolName')]",
+					"accountName": "[parameters('batchtoadf_properties_typeProperties_accountName')]",
+					"linkedServiceName": {
+						"referenceName": "linktoazurestorage",
+						"type": "LinkedServiceReference"
+					},
+					"accessKey": {
+						"type": "SecureString",
+						"value": "[parameters('batchtoadf_accessKey')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/linktoazurestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "check_vm_status",
+						"description": "activity checks for Vm status",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "GET",
+							"headers": {},
+							"url": {
+								"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionId,'/resourceGroups/',pipeline().parameters.ResourceGroupName,'/providers/Microsoft.Compute/virtualMachines/',pipeline().parameters.VMName,'/InstanceView?api-version=2024-03-01')",
+								"type": "Expression"
+							},
+							"authentication": {
+								"resource": "https://management.azure.com/",
+								"credential": {
+									"referenceName": "vmtoadf",
+									"type": "CredentialReference"
+								}
+							}
+						}
+					},
+					{
+						"name": "If Condition1",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "check_vm_status",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('check_vm_status').output[1].displayStatus,'VM deallocated')",
+								"type": "Expression"
+							},
+							"ifTrueActivities": [
+								{
+									"name": "startvmact",
+									"type": "Custom",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"command": {
+											"value": "python startvm.py",
+											"type": "Expression"
+										},
+										"resourceLinkedService": {
+											"referenceName": "AzureBlobStorage1",
+											"type": "LinkedServiceReference"
+										},
+										"folderPath": "code",
+										"referenceObjects": {
+											"linkedServices": [],
+											"datasets": []
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "batchtoadf",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "runvmscriptact",
+						"type": "Custom",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"command": {
+								"value": "python runscriptinvm.py",
+								"type": "Expression"
+							},
+							"resourceLinkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"folderPath": "code",
+							"referenceObjects": {
+								"linkedServices": [],
+								"datasets": []
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "batchtoadf",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"SubscriptionId": {
+						"type": "string",
+						"defaultValue": "a16f162e-e90e-4101-8d1d-89a715aa9104"
+					},
+					"ResourceGroupName": {
+						"type": "string",
+						"defaultValue": "snowteam2"
+					},
+					"Region": {
+						"type": "string",
+						"defaultValue": "eastus"
+					},
+					"VMName": {
+						"type": "string",
+						"defaultValue": "snowsample"
+					},
+					"Command": {
+						"type": "string",
+						"defaultValue": "Start"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]",
+				"[concat(variables('factoryId'), '/linkedServices/batchtoadf')]",
+				"[concat(variables('factoryId'), '/credentials/vmtoadf')]"
 			]
 		}
 	]
