@@ -334,13 +334,15 @@
 						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@equals(activity('check_vm_status').output[1].displayStatus,'VM deallocated')",
+								"value": "@equals(activity('check_vm_status').output.statuses[1].displayStatus,'VM deallocated')",
 								"type": "Expression"
 							},
 							"ifTrueActivities": [
 								{
 									"name": "startvmact",
 									"type": "Custom",
+									"state": "Inactive",
+									"onInactiveMarkAs": "Succeeded",
 									"dependsOn": [],
 									"policy": {
 										"timeout": "0.12:00:00",
