@@ -41,7 +41,6 @@
 						]
 					}
 				],
-				"userProperties": [],
 				"typeProperties": {
 					"expression": {
 						"value": "@equals(activity('check_vm_status').output[1].displayStatus,'VM deallocated')",
@@ -49,7 +48,7 @@
 					},
 					"ifTrueActivities": [
 						{
-							"name": "Custom1",
+							"name": "startvmact",
 							"type": "Custom",
 							"dependsOn": [],
 							"policy": {
@@ -61,9 +60,12 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"command": "python ",
+								"command": {
+									"value": "python startvm.py",
+									"type": "Expression"
+								},
 								"resourceLinkedService": {
-									"referenceName": "adftostoragelink",
+									"referenceName": "AzureBlobStorage1",
 									"type": "LinkedServiceReference"
 								},
 								"folderPath": "code",
@@ -78,6 +80,40 @@
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "runvmscriptact",
+				"type": "Custom",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": {
+						"value": "python runscriptinvm.py",
+						"type": "Expression"
+					},
+					"resourceLinkedService": {
+						"referenceName": "AzureBlobStorage1",
+						"type": "LinkedServiceReference"
+					},
+					"folderPath": "code",
+					"referenceObjects": {
+						"linkedServices": [],
+						"datasets": []
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "batchtoadf",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
