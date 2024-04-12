@@ -123,7 +123,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"command": {
-											"value": "python startvm.py",
+											"value": "cmd /C python startvm.py",
 											"type": "Expression"
 										},
 										"resourceLinkedService": {
