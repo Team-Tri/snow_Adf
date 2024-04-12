@@ -79,42 +79,88 @@
 								"referenceName": "batchtoadf",
 								"type": "LinkedServiceReference"
 							}
+						},
+						{
+							"name": "runvmscriptact",
+							"type": "Custom",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
+							"dependsOn": [
+								{
+									"activity": "startvmact",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"command": {
+									"value": "python runscriptinvm.py",
+									"type": "Expression"
+								},
+								"resourceLinkedService": {
+									"referenceName": "AzureBlobStorage1",
+									"type": "LinkedServiceReference"
+								},
+								"folderPath": "code",
+								"referenceObjects": {
+									"linkedServices": [],
+									"datasets": []
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "batchtoadf",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "stoptvmact",
+							"type": "Custom",
+							"dependsOn": [
+								{
+									"activity": "runvmscriptact",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"command": {
+									"value": "cmd /C python stopvm.py",
+									"type": "Expression"
+								},
+								"resourceLinkedService": {
+									"referenceName": "AzureBlobStorage1",
+									"type": "LinkedServiceReference"
+								},
+								"folderPath": "code",
+								"referenceObjects": {
+									"linkedServices": [],
+									"datasets": []
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "batchtoadf",
+								"type": "LinkedServiceReference"
+							}
 						}
 					]
-				}
-			},
-			{
-				"name": "runvmscriptact",
-				"type": "Custom",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"command": {
-						"value": "python runscriptinvm.py",
-						"type": "Expression"
-					},
-					"resourceLinkedService": {
-						"referenceName": "AzureBlobStorage1",
-						"type": "LinkedServiceReference"
-					},
-					"folderPath": "code",
-					"referenceObjects": {
-						"linkedServices": [],
-						"datasets": []
-					}
-				},
-				"linkedServiceName": {
-					"referenceName": "batchtoadf",
-					"type": "LinkedServiceReference"
 				}
 			}
 		],
