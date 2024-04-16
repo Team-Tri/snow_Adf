@@ -33,6 +33,8 @@
 			{
 				"name": "If Condition1",
 				"type": "IfCondition",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "check_vm_status",
@@ -149,7 +151,7 @@
 								}
 							},
 							"linkedServiceName": {
-								"referenceName": "batchtoadf",
+								"referenceName": "batchtoadfnew",
 								"type": "LinkedServiceReference"
 							}
 						},
@@ -274,10 +276,6 @@
 			"VMName": {
 				"type": "string",
 				"defaultValue": "snowsample"
-			},
-			"Command": {
-				"type": "string",
-				"defaultValue": "Start"
 			}
 		},
 		"annotations": []
