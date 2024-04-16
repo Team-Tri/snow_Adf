@@ -2,16 +2,16 @@
 	"name": "DelimitedText1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureDataLakeStorageToAdf",
+			"referenceName": "snowstorelink",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation",
+				"type": "AzureBlobStorageLocation",
 				"folderPath": "config_json",
-				"fileSystem": "snowstore"
+				"container": "snowstore"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
