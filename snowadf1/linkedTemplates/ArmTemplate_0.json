@@ -232,7 +232,14 @@
 								{
 									"name": "runvmscriptact_2",
 									"type": "Custom",
-									"dependsOn": [],
+									"dependsOn": [
+										{
+											"activity": "checkpackages_2",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
 									"policy": {
 										"timeout": "0.12:00:00",
 										"retry": 0,
@@ -243,7 +250,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"command": {
-											"value": "python runscriptinvm.py",
+											"value": "python3 runscriptinvm.py",
 											"type": "Expression"
 										},
 										"resourceLinkedService": {
@@ -282,7 +289,39 @@
 									"userProperties": [],
 									"typeProperties": {
 										"command": {
-											"value": "python stopvm.py",
+											"value": "python3 stopvm.py",
+											"type": "Expression"
+										},
+										"resourceLinkedService": {
+											"referenceName": "snowstorelink",
+											"type": "LinkedServiceReference"
+										},
+										"folderPath": "code",
+										"referenceObjects": {
+											"linkedServices": [],
+											"datasets": []
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "batchtoadfnew",
+										"type": "LinkedServiceReference"
+									}
+								},
+								{
+									"name": "checkpackages_2",
+									"type": "Custom",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"command": {
+											"value": "python3 checkscript.py",
 											"type": "Expression"
 										},
 										"resourceLinkedService": {
@@ -305,7 +344,14 @@
 								{
 									"name": "startvmact",
 									"type": "Custom",
-									"dependsOn": [],
+									"dependsOn": [
+										{
+											"activity": "checkpackages",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
 									"policy": {
 										"timeout": "0.12:00:00",
 										"retry": 0,
@@ -316,7 +362,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"command": {
-											"value": "python startvm.py",
+											"value": "python3 startvm.py",
 											"type": "Expression"
 										},
 										"resourceLinkedService": {
@@ -355,7 +401,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"command": {
-											"value": "python runscriptinvm.py",
+											"value": "python3 runscriptinvm.py",
 											"type": "Expression"
 										},
 										"resourceLinkedService": {
@@ -394,7 +440,39 @@
 									"userProperties": [],
 									"typeProperties": {
 										"command": {
-											"value": "python stopvm.py",
+											"value": "python3 stopvm.py",
+											"type": "Expression"
+										},
+										"resourceLinkedService": {
+											"referenceName": "snowstorelink",
+											"type": "LinkedServiceReference"
+										},
+										"folderPath": "code",
+										"referenceObjects": {
+											"linkedServices": [],
+											"datasets": []
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "batchtoadfnew",
+										"type": "LinkedServiceReference"
+									}
+								},
+								{
+									"name": "checkpackages",
+									"type": "Custom",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"command": {
+											"value": "python3 checkscript.py",
 											"type": "Expression"
 										},
 										"resourceLinkedService": {
