@@ -70,7 +70,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"command": {
-									"value": "python runscriptinvm.py",
+									"value": "python3 runscriptinvm.py",
 									"type": "Expression"
 								},
 								"resourceLinkedService": {
@@ -109,7 +109,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"command": {
-									"value": "python stopvm.py",
+									"value": "python3 stopvm.py",
 									"type": "Expression"
 								},
 								"resourceLinkedService": {
@@ -141,7 +141,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"command": {
-									"value": "python checkscript.py",
+									"value": "python3 checkscript.py",
 									"type": "Expression"
 								},
 								"resourceLinkedService": {
@@ -182,7 +182,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"command": {
-									"value": "python startvm.py",
+									"value": "python3 startvm.py",
 									"type": "Expression"
 								},
 								"resourceLinkedService": {
@@ -203,8 +203,6 @@
 						{
 							"name": "runvmscriptact",
 							"type": "Custom",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "startvmact",
@@ -223,7 +221,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"command": {
-									"value": "python runscriptinvm.py",
+									"value": "python3 runscriptinvm.py",
 									"type": "Expression"
 								},
 								"resourceLinkedService": {
@@ -262,7 +260,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"command": {
-									"value": "python stopvm.py",
+									"value": "python3 stopvm.py",
 									"type": "Expression"
 								},
 								"resourceLinkedService": {
@@ -294,7 +292,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"command": {
-									"value": "python checkscript.py",
+									"value": "python3 checkscript.py",
 									"type": "Expression"
 								},
 								"resourceLinkedService": {
