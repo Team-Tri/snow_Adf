@@ -66,11 +66,19 @@
 									"value": "python runscriptinvm.py",
 									"type": "Expression"
 								},
+								"resourceLinkedService": {
+									"referenceName": "snowstorelink",
+									"type": "LinkedServiceReference"
+								},
 								"folderPath": "code",
 								"referenceObjects": {
 									"linkedServices": [],
 									"datasets": []
 								}
+							},
+							"linkedServiceName": {
+								"referenceName": "batchtoadfnew",
+								"type": "LinkedServiceReference"
 							}
 						},
 						{
@@ -97,11 +105,19 @@
 									"value": "cmd /C python stopvm.py",
 									"type": "Expression"
 								},
+								"resourceLinkedService": {
+									"referenceName": "snowstorelink",
+									"type": "LinkedServiceReference"
+								},
 								"folderPath": "code",
 								"referenceObjects": {
 									"linkedServices": [],
 									"datasets": []
 								}
+							},
+							"linkedServiceName": {
+								"referenceName": "batchtoadfnew",
+								"type": "LinkedServiceReference"
 							}
 						}
 					],
