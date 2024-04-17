@@ -1,0 +1,77 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "snowadf1"
+		},
+		"batchtoadfnew_accessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessKey' of 'batchtoadfnew'"
+		},
+		"snowstorelink_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'snowstorelink'"
+		},
+		"batchtoadfnew_properties_typeProperties_batchUri": {
+			"type": "string",
+			"defaultValue": "https://snowteambatchacc.eastus.batch.azure.com"
+		},
+		"batchtoadfnew_properties_typeProperties_poolName": {
+			"type": "string",
+			"defaultValue": "snowpool"
+		},
+		"batchtoadfnew_properties_typeProperties_accountName": {
+			"type": "string",
+			"defaultValue": "snowteambatchacc"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "snowadf1_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"snowstorelink_connectionString": {
+						"value": "[parameters('snowstorelink_connectionString')]"
+					},
+					"batchtoadfnew_accessKey": {
+						"value": "[parameters('batchtoadfnew_accessKey')]"
+					},
+					"batchtoadfnew_properties_typeProperties_batchUri": {
+						"value": "[parameters('batchtoadfnew_properties_typeProperties_batchUri')]"
+					},
+					"batchtoadfnew_properties_typeProperties_poolName": {
+						"value": "[parameters('batchtoadfnew_properties_typeProperties_poolName')]"
+					},
+					"batchtoadfnew_properties_typeProperties_accountName": {
+						"value": "[parameters('batchtoadfnew_properties_typeProperties_accountName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
