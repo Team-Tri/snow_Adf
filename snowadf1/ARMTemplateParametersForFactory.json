@@ -8,9 +8,6 @@
 		"batchtoadfnew_accessKey": {
 			"value": ""
 		},
-		"snowstorelink_connectionString": {
-			"value": ""
-		},
 		"batchtoadfnew_properties_typeProperties_batchUri": {
 			"value": "https://snowteambatchacc.eastus.batch.azure.com"
 		},
@@ -19,6 +16,9 @@
 		},
 		"batchtoadfnew_properties_typeProperties_accountName": {
 			"value": "snowteambatchacc"
+		},
+		"snowstorelink_properties_typeProperties_serviceEndpoint": {
+			"value": "https://snowstore2.blob.core.windows.net/"
 		}
 	}
 }

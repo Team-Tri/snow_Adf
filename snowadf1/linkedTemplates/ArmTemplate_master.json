@@ -11,10 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessKey' of 'batchtoadfnew'"
 		},
-		"snowstorelink_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'snowstorelink'"
-		},
 		"batchtoadfnew_properties_typeProperties_batchUri": {
 			"type": "string",
 			"defaultValue": "https://snowteambatchacc.eastus.batch.azure.com"
@@ -26,6 +22,10 @@
 		"batchtoadfnew_properties_typeProperties_accountName": {
 			"type": "string",
 			"defaultValue": "snowteambatchacc"
+		},
+		"snowstorelink_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://snowstore2.blob.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -54,11 +54,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"snowstorelink_connectionString": {
-						"value": "[parameters('snowstorelink_connectionString')]"
-					},
 					"batchtoadfnew_accessKey": {
 						"value": "[parameters('batchtoadfnew_accessKey')]"
+					},
+					"snowstorelink_properties_typeProperties_serviceEndpoint": {
+						"value": "[parameters('snowstorelink_properties_typeProperties_serviceEndpoint')]"
 					},
 					"batchtoadfnew_properties_typeProperties_batchUri": {
 						"value": "[parameters('batchtoadfnew_properties_typeProperties_batchUri')]"
