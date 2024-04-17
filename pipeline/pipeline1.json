@@ -24,7 +24,7 @@
 					"authentication": {
 						"resource": "https://management.azure.com/",
 						"credential": {
-							"referenceName": "vmtoadf",
+							"referenceName": "crednew",
 							"type": "CredentialReference"
 						},
 						"type": "UserAssignedManagedIdentity"
