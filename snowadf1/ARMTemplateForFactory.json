@@ -139,7 +139,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"command": {
-											"value": "cmd /C python stopvm.py",
+											"value": "python stopvm.py",
 											"type": "Expression"
 										},
 										"resourceLinkedService": {
@@ -173,7 +173,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"command": {
-											"value": "cmd /C python startvm.py",
+											"value": "python startvm.py",
 											"type": "Expression"
 										},
 										"resourceLinkedService": {
@@ -251,7 +251,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"command": {
-											"value": "cmd /C python stopvm.py",
+											"value": "python stopvm.py",
 											"type": "Expression"
 										},
 										"resourceLinkedService": {
@@ -298,8 +298,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/credentials/crednew')]",
-				"[concat(variables('factoryId'), '/linkedServices/batchtoadfnew')]",
-				"[concat(variables('factoryId'), '/linkedServices/snowstorelink')]"
+				"[concat(variables('factoryId'), '/linkedServices/snowstorelink')]",
+				"[concat(variables('factoryId'), '/linkedServices/batchtoadfnew')]"
 			]
 		},
 		{
