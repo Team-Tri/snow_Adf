@@ -214,8 +214,6 @@
 					{
 						"name": "If Condition1",
 						"type": "IfCondition",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "check_vm_status",
@@ -248,11 +246,19 @@
 											"value": "python runscriptinvm.py",
 											"type": "Expression"
 										},
+										"resourceLinkedService": {
+											"referenceName": "snowstorelink",
+											"type": "LinkedServiceReference"
+										},
 										"folderPath": "code",
 										"referenceObjects": {
 											"linkedServices": [],
 											"datasets": []
 										}
+									},
+									"linkedServiceName": {
+										"referenceName": "batchtoadfnew",
+										"type": "LinkedServiceReference"
 									}
 								},
 								{
@@ -279,11 +285,19 @@
 											"value": "cmd /C python stopvm.py",
 											"type": "Expression"
 										},
+										"resourceLinkedService": {
+											"referenceName": "snowstorelink",
+											"type": "LinkedServiceReference"
+										},
 										"folderPath": "code",
 										"referenceObjects": {
 											"linkedServices": [],
 											"datasets": []
 										}
+									},
+									"linkedServiceName": {
+										"referenceName": "batchtoadfnew",
+										"type": "LinkedServiceReference"
 									}
 								}
 							],
@@ -304,6 +318,10 @@
 										"command": {
 											"value": "cmd /C python startvm.py",
 											"type": "Expression"
+										},
+										"resourceLinkedService": {
+											"referenceName": "snowstorelink",
+											"type": "LinkedServiceReference"
 										},
 										"folderPath": "code",
 										"referenceObjects": {
@@ -340,11 +358,19 @@
 											"value": "python runscriptinvm.py",
 											"type": "Expression"
 										},
+										"resourceLinkedService": {
+											"referenceName": "snowstorelink",
+											"type": "LinkedServiceReference"
+										},
 										"folderPath": "code",
 										"referenceObjects": {
 											"linkedServices": [],
 											"datasets": []
 										}
+									},
+									"linkedServiceName": {
+										"referenceName": "batchtoadfnew",
+										"type": "LinkedServiceReference"
 									}
 								},
 								{
@@ -371,34 +397,22 @@
 											"value": "cmd /C python stopvm.py",
 											"type": "Expression"
 										},
+										"resourceLinkedService": {
+											"referenceName": "snowstorelink",
+											"type": "LinkedServiceReference"
+										},
 										"folderPath": "code",
 										"referenceObjects": {
 											"linkedServices": [],
 											"datasets": []
 										}
+									},
+									"linkedServiceName": {
+										"referenceName": "batchtoadfnew",
+										"type": "LinkedServiceReference"
 									}
 								}
 							]
-						}
-					},
-					{
-						"name": "Azure Function1",
-						"type": "AzureFunctionActivity",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"functionName": "snowteamfuncapp101",
-							"method": "GET",
-							"headers": {}
 						}
 					}
 				],
@@ -427,7 +441,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/credentials/crednew')]",
-				"[concat(variables('factoryId'), '/linkedServices/batchtoadfnew')]"
+				"[concat(variables('factoryId'), '/linkedServices/batchtoadfnew')]",
+				"[concat(variables('factoryId'), '/linkedServices/snowstorelink')]"
 			]
 		}
 	]
