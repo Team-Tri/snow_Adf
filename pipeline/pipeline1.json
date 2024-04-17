@@ -68,19 +68,11 @@
 									"value": "python runscriptinvm.py",
 									"type": "Expression"
 								},
-								"resourceLinkedService": {
-									"referenceName": "AzureBlobStorage1",
-									"type": "LinkedServiceReference"
-								},
 								"folderPath": "code",
 								"referenceObjects": {
 									"linkedServices": [],
 									"datasets": []
 								}
-							},
-							"linkedServiceName": {
-								"referenceName": "batchtoadf",
-								"type": "LinkedServiceReference"
 							}
 						},
 						{
@@ -107,19 +99,11 @@
 									"value": "cmd /C python stopvm.py",
 									"type": "Expression"
 								},
-								"resourceLinkedService": {
-									"referenceName": "AzureBlobStorage1",
-									"type": "LinkedServiceReference"
-								},
 								"folderPath": "code",
 								"referenceObjects": {
 									"linkedServices": [],
 									"datasets": []
 								}
-							},
-							"linkedServiceName": {
-								"referenceName": "batchtoadf",
-								"type": "LinkedServiceReference"
 							}
 						}
 					],
@@ -140,10 +124,6 @@
 								"command": {
 									"value": "cmd /C python startvm.py",
 									"type": "Expression"
-								},
-								"resourceLinkedService": {
-									"referenceName": "AzureBlobStorage1",
-									"type": "LinkedServiceReference"
 								},
 								"folderPath": "code",
 								"referenceObjects": {
@@ -180,19 +160,11 @@
 									"value": "python runscriptinvm.py",
 									"type": "Expression"
 								},
-								"resourceLinkedService": {
-									"referenceName": "AzureBlobStorage1",
-									"type": "LinkedServiceReference"
-								},
 								"folderPath": "code",
 								"referenceObjects": {
 									"linkedServices": [],
 									"datasets": []
 								}
-							},
-							"linkedServiceName": {
-								"referenceName": "batchtoadf",
-								"type": "LinkedServiceReference"
 							}
 						},
 						{
@@ -219,19 +191,11 @@
 									"value": "cmd /C python stopvm.py",
 									"type": "Expression"
 								},
-								"resourceLinkedService": {
-									"referenceName": "AzureBlobStorage1",
-									"type": "LinkedServiceReference"
-								},
 								"folderPath": "code",
 								"referenceObjects": {
 									"linkedServices": [],
 									"datasets": []
 								}
-							},
-							"linkedServiceName": {
-								"referenceName": "batchtoadf",
-								"type": "LinkedServiceReference"
 							}
 						}
 					]
@@ -254,10 +218,6 @@
 				"typeProperties": {
 					"functionName": "snowteamfuncapp101",
 					"method": "GET"
-				},
-				"linkedServiceName": {
-					"referenceName": "adftofuncapplink",
-					"type": "LinkedServiceReference"
 				}
 			}
 		],
