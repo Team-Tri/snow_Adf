@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('Execute checkvmstatus_pipe').output.statuses[1].displayStatus,'VM deallocated')",
+						"value": "@equals(activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.status,'VM deallocated')",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [

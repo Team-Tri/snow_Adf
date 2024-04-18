@@ -7,7 +7,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Execute checkvmstatus_pipe",
+						"activity": "Set variable1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.statuses[1].displayStatus,'VM running')",
+						"value": "@equals(activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.status,'VM running')",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -70,8 +70,37 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Execute checkvmstatus_pipe",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "status",
+					"value": {
+						"value": "@activity('Execute checkvmstatus_pipe').output",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"status": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
