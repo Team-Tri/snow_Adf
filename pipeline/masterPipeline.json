@@ -1,0 +1,86 @@
+{
+	"name": "masterPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute vmonpipe",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "vm_on_pipe",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "runvmscriptact",
+				"type": "Custom",
+				"dependsOn": [
+					{
+						"activity": "Execute vmonpipe",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"command": {
+						"value": "python3 runscriptinvm.py",
+						"type": "Expression"
+					},
+					"resourceLinkedService": {
+						"referenceName": "snowstorelink",
+						"type": "LinkedServiceReference"
+					},
+					"folderPath": "code",
+					"referenceObjects": {
+						"linkedServices": [],
+						"datasets": []
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "batchtoadfnew",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Execute offvm_pipe",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "runvmscriptact",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "vm_off_pipe",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}
