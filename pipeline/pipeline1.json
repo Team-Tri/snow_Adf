@@ -242,6 +242,8 @@
 						{
 							"name": "stoptvmact",
 							"type": "Custom",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "runvmscriptact",
