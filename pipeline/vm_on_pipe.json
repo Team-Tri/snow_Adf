@@ -51,18 +51,6 @@
 								"referenceName": "batchtoadfnew",
 								"type": "LinkedServiceReference"
 							}
-						},
-						{
-							"name": "Execute Pipeline1",
-							"type": "ExecutePipeline",
-							"dependsOn": [],
-							"policy": {
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"waitOnCompletion": true
-							}
 						}
 					]
 				}
