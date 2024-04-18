@@ -30,6 +30,36 @@
 						"type": "UserAssignedManagedIdentity"
 					}
 				}
+			},
+			{
+				"name": "output_variables",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "check_vm_status",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "pipelineReturnValue",
+					"value": [
+						{
+							"key": "status",
+							"value": {
+								"type": "String",
+								"content": "@check_vm_status.output.statuses[1].displayStatus"
+							}
+						}
+					],
+					"setSystemVariable": true
+				}
 			}
 		],
 		"parameters": {

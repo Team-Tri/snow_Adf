@@ -7,7 +7,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Execute Pipeline2",
+						"activity": "Execute checkvmstatus_pipe",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('Execute Pipeline1').output.statuses[1].displayStatus,'VM deallocated')",
+						"value": "@equals(activity('Execute checkvmstatus_pipe').output.statuses[1].displayStatus,'VM deallocated')",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -68,7 +68,7 @@
 				}
 			},
 			{
-				"name": "Execute Pipeline2",
+				"name": "Execute checkvmstatus_pipe",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"policy": {

@@ -7,7 +7,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Execute Pipeline2",
+						"activity": "Execute checkvmstatus_pipe",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('Execute Pipeline2').output.statuses[1].displayStatus,'VM running')",
+						"value": "@equals(activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.statuses[1].displayStatus,'VM running')",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -51,24 +51,12 @@
 								"referenceName": "batchtoadfnew",
 								"type": "LinkedServiceReference"
 							}
-						},
-						{
-							"name": "Execute Pipeline1",
-							"type": "ExecutePipeline",
-							"dependsOn": [],
-							"policy": {
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"waitOnCompletion": true
-							}
 						}
 					]
 				}
 			},
 			{
-				"name": "Execute Pipeline2",
+				"name": "Execute checkvmstatus_pipe",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"policy": {
