@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.status,'VM running')",
+						"value": "@equals(variables('status'),'VM running')",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -90,7 +90,7 @@
 				"typeProperties": {
 					"variableName": "status",
 					"value": {
-						"value": "@activity('Execute checkvmstatus_pipe').output",
+						"value": "@activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.status",
 						"type": "Expression"
 					}
 				}
