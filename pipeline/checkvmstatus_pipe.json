@@ -54,7 +54,7 @@
 							"key": "status",
 							"value": {
 								"type": "String",
-								"content": "@check_vm_status.output.statuses[1].displayStatus"
+								"content": "@activity('check_vm_status').output.statuses[1].displayStatus"
 							}
 						}
 					],
