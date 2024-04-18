@@ -51,10 +51,10 @@
 					"variableName": "pipelineReturnValue",
 					"value": [
 						{
-							"key": "status",
+							"key": "Vmstatus",
 							"value": {
 								"type": "Expression",
-								"content": "@check_vm_status.output.statuses[1].displayStatus"
+								"content": "@activity('check_vm_status').output.statuses[1].displayStatus"
 							}
 						}
 					],
