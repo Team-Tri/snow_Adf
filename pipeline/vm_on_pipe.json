@@ -90,7 +90,7 @@
 				"typeProperties": {
 					"variableName": "Vmstatus1",
 					"value": {
-						"value": "@activity('Execute checkvmstatus_pipe').output.pipeLineReturn.Vmstatus",
+						"value": "@activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.Vmstatus",
 						"type": "Expression"
 					}
 				}
