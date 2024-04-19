@@ -88,9 +88,10 @@
 							"variableName": "pipelineReturnValue",
 							"value": [
 								{
-									"key": "status",
+									"key": "Vmstatus",
 									"value": {
-										"type": "String"
+										"type": "Expression",
+										"content": "@activity('check_vm_status').output.statuses[1].displayStatus"
 									}
 								}
 							],
@@ -117,6 +118,11 @@
 					"VMName": {
 						"type": "string",
 						"defaultValue": "snowsample"
+					}
+				},
+				"variables": {
+					"status": {
+						"type": "String"
 					}
 				},
 				"annotations": []
@@ -225,356 +231,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "check_vm_status",
-						"description": "activity checks for Vm status",
-						"type": "WebActivity",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "GET",
-							"headers": {},
-							"url": {
-								"value": "@concat('https://management.azure.com/subscriptions/',pipeline().parameters.SubscriptionId,'/resourceGroups/',pipeline().parameters.ResourceGroupName,'/providers/Microsoft.Compute/virtualMachines/',pipeline().parameters.VMName,'/InstanceView?api-version=2024-03-01')",
-								"type": "Expression"
-							},
-							"authentication": {
-								"resource": "https://management.azure.com/",
-								"credential": {
-									"referenceName": "crednew",
-									"type": "CredentialReference"
-								},
-								"type": "UserAssignedManagedIdentity"
-							}
-						}
-					},
-					{
-						"name": "If Condition1",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "check_vm_status",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('check_vm_status').output.statuses[1].displayStatus,'VM deallocated')",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "runvmscriptact_2",
-									"type": "Custom",
-									"dependsOn": [
-										{
-											"activity": "checkpackages_2",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"command": {
-											"value": "python3 runscriptinvm.py",
-											"type": "Expression"
-										},
-										"resourceLinkedService": {
-											"referenceName": "snowstorelink",
-											"type": "LinkedServiceReference"
-										},
-										"folderPath": "code",
-										"referenceObjects": {
-											"linkedServices": [],
-											"datasets": []
-										}
-									},
-									"linkedServiceName": {
-										"referenceName": "batchtoadfnew",
-										"type": "LinkedServiceReference"
-									}
-								},
-								{
-									"name": "stoptvmact_2",
-									"type": "Custom",
-									"dependsOn": [
-										{
-											"activity": "runvmscriptact_2",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"command": {
-											"value": "python3 stopvm.py",
-											"type": "Expression"
-										},
-										"resourceLinkedService": {
-											"referenceName": "snowstorelink",
-											"type": "LinkedServiceReference"
-										},
-										"folderPath": "code",
-										"referenceObjects": {
-											"linkedServices": [],
-											"datasets": []
-										}
-									},
-									"linkedServiceName": {
-										"referenceName": "batchtoadfnew",
-										"type": "LinkedServiceReference"
-									}
-								},
-								{
-									"name": "checkpackages_2",
-									"type": "Custom",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"command": {
-											"value": "python3 checkscript.py",
-											"type": "Expression"
-										},
-										"resourceLinkedService": {
-											"referenceName": "snowstorelink",
-											"type": "LinkedServiceReference"
-										},
-										"folderPath": "code",
-										"referenceObjects": {
-											"linkedServices": [],
-											"datasets": []
-										}
-									},
-									"linkedServiceName": {
-										"referenceName": "batchtoadfnew",
-										"type": "LinkedServiceReference"
-									}
-								}
-							],
-							"ifTrueActivities": [
-								{
-									"name": "startvmact",
-									"type": "Custom",
-									"dependsOn": [
-										{
-											"activity": "checkpackages",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"command": {
-											"value": "python3 startvm.py",
-											"type": "Expression"
-										},
-										"resourceLinkedService": {
-											"referenceName": "snowstorelink",
-											"type": "LinkedServiceReference"
-										},
-										"folderPath": "code",
-										"referenceObjects": {
-											"linkedServices": [],
-											"datasets": []
-										}
-									},
-									"linkedServiceName": {
-										"referenceName": "batchtoadfnew",
-										"type": "LinkedServiceReference"
-									}
-								},
-								{
-									"name": "runvmscriptact",
-									"type": "Custom",
-									"dependsOn": [
-										{
-											"activity": "startvmact",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"command": {
-											"value": "python3 runscriptinvm.py",
-											"type": "Expression"
-										},
-										"resourceLinkedService": {
-											"referenceName": "snowstorelink",
-											"type": "LinkedServiceReference"
-										},
-										"folderPath": "code",
-										"referenceObjects": {
-											"linkedServices": [],
-											"datasets": []
-										}
-									},
-									"linkedServiceName": {
-										"referenceName": "batchtoadfnew",
-										"type": "LinkedServiceReference"
-									}
-								},
-								{
-									"name": "stoptvmact",
-									"type": "Custom",
-									"state": "Inactive",
-									"onInactiveMarkAs": "Succeeded",
-									"dependsOn": [
-										{
-											"activity": "runvmscriptact",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"command": {
-											"value": "python3 stopvm.py",
-											"type": "Expression"
-										},
-										"resourceLinkedService": {
-											"referenceName": "snowstorelink",
-											"type": "LinkedServiceReference"
-										},
-										"folderPath": "code",
-										"referenceObjects": {
-											"linkedServices": [],
-											"datasets": []
-										}
-									},
-									"linkedServiceName": {
-										"referenceName": "batchtoadfnew",
-										"type": "LinkedServiceReference"
-									}
-								},
-								{
-									"name": "checkpackages",
-									"type": "Custom",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"command": {
-											"value": "python3 checkscript.py",
-											"type": "Expression"
-										},
-										"resourceLinkedService": {
-											"referenceName": "snowstorelink",
-											"type": "LinkedServiceReference"
-										},
-										"folderPath": "code",
-										"referenceObjects": {
-											"linkedServices": [],
-											"datasets": []
-										}
-									},
-									"linkedServiceName": {
-										"referenceName": "batchtoadfnew",
-										"type": "LinkedServiceReference"
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"SubscriptionId": {
-						"type": "string",
-						"defaultValue": "a16f162e-e90e-4101-8d1d-89a715aa9104"
-					},
-					"ResourceGroupName": {
-						"type": "string",
-						"defaultValue": "snowteam2"
-					},
-					"Region": {
-						"type": "string",
-						"defaultValue": "eastus"
-					},
-					"VMName": {
-						"type": "string",
-						"defaultValue": "snowsample"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/credentials/crednew')]",
-				"[concat(variables('factoryId'), '/linkedServices/snowstorelink')]",
-				"[concat(variables('factoryId'), '/linkedServices/batchtoadfnew')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/vm_off_pipe')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -585,7 +241,7 @@
 						"type": "IfCondition",
 						"dependsOn": [
 							{
-								"activity": "Execute checkvmstatus_pipe",
+								"activity": "Set variable1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -594,7 +250,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@equals(activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.statuses[1].displayStatus,'VM running')",
+								"value": "@equals(variables('status'),'VM running')",
 								"type": "Expression"
 							},
 							"ifTrueActivities": [
@@ -649,10 +305,39 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Execute checkvmstatus_pipe",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "status",
+							"value": {
+								"value": "@activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.status",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"status": {
+						"type": "String"
+					}
 				},
 				"annotations": []
 			},
@@ -682,7 +367,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@equals(activity('Execute checkvmstatus_pipe').output.statuses[1].displayStatus,'VM deallocated')",
+								"value": "@equals(activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.status,'VM deallocated')",
 								"type": "Expression"
 							},
 							"ifTrueActivities": [
