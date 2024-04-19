@@ -225,7 +225,7 @@
 					"Vmstatus": {
 						"type": "String"
 					},
-					"status": {
+					"Vmstatus2": {
 						"type": "String"
 					}
 				},
@@ -258,7 +258,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@equals(variables('status'),'VM running')",
+								"value": "@equals(variables('Vmstatus2'),'VM running')",
 								"type": "Expression"
 							},
 							"ifTrueActivities": [
@@ -331,7 +331,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "status",
+							"variableName": "Vmstatus2",
 							"value": {
 								"value": "@activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.status",
 								"type": "Expression"
@@ -343,7 +343,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"variables": {
-					"status": {
+					"Vmstatus2": {
 						"type": "String"
 					}
 				},
@@ -375,7 +375,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@equals(variables('Vmstatus'),'VM deallocated')",
+								"value": "@equals(variables('Vmstatus1'),'VM deallocated')",
 								"type": "Expression"
 							},
 							"ifTrueActivities": [
@@ -448,7 +448,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "Vmstatus",
+							"variableName": "Vmstatus1",
 							"value": {
 								"value": "@activity('Execute checkvmstatus_pipe').output.pipeLineReturn.Vmstatus",
 								"type": "Expression"
@@ -460,10 +460,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"variables": {
-					"Vmstatus": {
-						"type": "String"
-					},
-					"status": {
+					"Vmstatus1": {
 						"type": "String"
 					}
 				},
