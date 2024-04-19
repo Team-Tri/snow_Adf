@@ -376,7 +376,7 @@
 						"typeProperties": {
 							"variableName": "Vmstatus2",
 							"value": {
-								"value": "@activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.status",
+								"value": "@activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.Vmstatus",
 								"type": "Expression"
 							}
 						}
@@ -493,7 +493,7 @@
 						"typeProperties": {
 							"variableName": "Vmstatus1",
 							"value": {
-								"value": "@activity('Execute checkvmstatus_pipe').output.pipeLineReturn.Vmstatus",
+								"value": "@activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.Vmstatus",
 								"type": "Expression"
 							}
 						}
