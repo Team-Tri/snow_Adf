@@ -84,6 +84,9 @@
 		"variables": {
 			"Vmstatus": {
 				"type": "String"
+			},
+			"Vmstatus2": {
+				"type": "String"
 			}
 		},
 		"annotations": []
