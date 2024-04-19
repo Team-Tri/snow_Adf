@@ -292,7 +292,7 @@
 						"type": "IfCondition",
 						"dependsOn": [
 							{
-								"activity": "Set variable1",
+								"activity": "Set variableVmstatus",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -358,7 +358,7 @@
 						}
 					},
 					{
-						"name": "Set variable1",
+						"name": "Set variableVmstatus",
 						"type": "SetVariable",
 						"dependsOn": [
 							{
@@ -409,7 +409,7 @@
 						"type": "IfCondition",
 						"dependsOn": [
 							{
-								"activity": "Execute checkvmstatus_pipe",
+								"activity": "SetvariableVmstatus",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -418,7 +418,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@equals(activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.status,'VM deallocated')",
+								"value": "@equals(variables('Vmstatus'),'VM deallocated')",
 								"type": "Expression"
 							},
 							"ifTrueActivities": [
@@ -473,10 +473,42 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "SetvariableVmstatus",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Execute checkvmstatus_pipe",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "Vmstatus",
+							"value": {
+								"value": "@activity('Execute checkvmstatus_pipe').output.pipeLineReturn.Vmstatus",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"Vmstatus": {
+						"type": "String"
+					},
+					"status": {
+						"type": "String"
+					}
 				},
 				"annotations": []
 			},
@@ -575,6 +607,14 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"Vmstatus": {
+						"type": "String"
+					},
+					"status": {
+						"type": "String"
+					}
 				},
 				"annotations": []
 			},
