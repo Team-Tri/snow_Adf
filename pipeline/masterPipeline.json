@@ -81,6 +81,11 @@
 				}
 			}
 		],
+		"variables": {
+			"Vmstatus": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

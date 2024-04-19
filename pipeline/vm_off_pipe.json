@@ -7,7 +7,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Set variable1",
+						"activity": "Set variableVmstatus",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -72,7 +72,7 @@
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "Set variableVmstatus",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
@@ -88,7 +88,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "status",
+					"variableName": "",
 					"value": {
 						"value": "@activity('Execute checkvmstatus_pipe').output.pipelineReturnValue.status",
 						"type": "Expression"
@@ -96,11 +96,6 @@
 				}
 			}
 		],
-		"variables": {
-			"status": {
-				"type": "String"
-			}
-		},
 		"annotations": []
 	}
 }
